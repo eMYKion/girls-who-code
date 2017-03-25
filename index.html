@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spinning Cube</title>
+  </head>
+  
+  <body>
+    <div id="view"></div>
+    <script src="./three.js"></script>
+    <script>
+      
+      //setting up renderer, scene, and camera
+      const renderer = new THREE.WebGLRenderer();
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 10000);
+      
+      //set camera position
+      camera.position.set(0,0,5);
+      
+      //add camera to scene
+      scene.add(camera);
+      
+      //set size of renderer according to web page width and height
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      
+      //finally, add the renderer domElement to the actual document
+      document.getElementById("view").appendChild(renderer.domElement);
+      
+      //creating a mesh from geometry and material
+      var material = new THREE.MeshBasicMaterial({color:0xaa1100});
+      var geometry = new THREE.BoxGeometry(2,2,2);
+      var mesh = new THREE.Mesh(geometry, material);
+      
+      //add the mesh to the scene
+      scene.add(mesh);
+      
+      
+      //setting up a render function
+      function render(){
+        
+        mesh.rotation.x += 0.01;
+        mesh.rotation.y += 0.01;
+        mesh.rotation.z += 0.01;
+        
+        renderer.render(scene, camera);
+        
+        //an advanced function caller that saves cpu
+        window.requestAnimationFrame(render);
+      }
+      
+      //call it once to begin rendering forever
+      render();
+      
+    </script>
+    
+  </body>
+</html>
